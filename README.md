@@ -1,4 +1,4 @@
-# Zakamo
+# Poopyrus
 
 React project using [Material UI](https://mui.com/material-ui/all-components/).
 
