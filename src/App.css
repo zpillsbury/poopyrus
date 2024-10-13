@@ -1,0 +1,17 @@
+#content {
+  margin-top: 72px !important;
+  margin: 12px;
+}
+
+.pets {
+  margin-bottom: 8px;
+  max-height: 75%;
+  width: 75%;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.name-input {
+  width: 75%;
+}
