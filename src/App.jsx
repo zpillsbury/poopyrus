@@ -1,73 +1,75 @@
 import AppBar from "@mui/material/AppBar"
-import Grid from "@mui/material/Grid2"
-import TextField from "@mui/material/TextField"
 import Toolbar from "@mui/material/Toolbar"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
-import Switch from "@mui/material/Switch"
+import { DateTime } from "luxon"
+import ButtonGroup from "@mui/material/ButtonGroup"
+import Button from "@mui/material/Button"
+import Divider from "@mui/material/Divider"
 
 import "./App.css"
-import Cat from "./images/cat.jpg"
-import Dog from "./images/dog.jpg"
 
 export function App() {
-  const [dogName, setDogName] = useState("")
-  const [catName, setCatName] = useState("")
-  const [switchValue, setSwitchValue] = useState(false)
+  const storedLogs = localStorage.getItem("logs")
+  const initialLogs = storedLogs ? JSON.parse(storedLogs) : []
+  const [pottyLogs, setPottyLogs] = useState(initialLogs)
+
+  function addLog(pottyType) {
+    console.log(pottyType)
+    console.log(DateTime.now().toFormat("t"))
+
+    const newLogs = [
+      ...pottyLogs,
+      {
+        date: DateTime.now().toFormat("t"),
+        type: pottyType,
+      },
+    ]
+
+    localStorage.setItem("logs", JSON.stringify(newLogs))
+    setPottyLogs(newLogs)
+  }
 
   return (
     <div>
       <AppBar>
         <Toolbar>
           <Typography variant="h6" component="div">
-            Zakamo
+            💩 Poopyrus
           </Typography>
         </Toolbar>
       </AppBar>
 
       <div id="content">
-        <Switch
-          checked={switchValue}
-          onChange={(e) => {
-            setSwitchValue(e.target.checked)
-          }}
-        />
+        <h1>Potty Logger 9000 🪵</h1>
 
-        <p>switch value: {`${switchValue}`}</p>
+        <ButtonGroup disableElevation variant="outlined" color="secondary" size="large">
+          <Button
+            onClick={() => {
+              addLog("pee")
+            }}
+          >
+            💦
+          </Button>
 
-        <Grid container spacing={3}>
-          <Grid size={6}>
-            <Typography variant="h4">Cat {catName}</Typography>
+          <Button
+            onClick={() => {
+              addLog("poo")
+            }}
+          >
+            💩
+          </Button>
+        </ButtonGroup>
 
-            <img src={Cat} alt="Cat" className="pets" />
+        <Divider className="poop-divider" />
 
-            <div>
-              <TextField
-                label="Name Em!"
-                variant="outlined"
-                className="name-input"
-                value={catName}
-                onChange={(e) => setCatName(e.target.value)}
-              />
-            </div>
-          </Grid>
-
-          <Grid size={6}>
-            <Typography variant="h4">Dog {dogName}</Typography>
-
-            <img src={Dog} alt="Dog" className="pets" />
-
-            <div>
-              <TextField
-                label="Name Em!"
-                variant="outlined"
-                className="name-input"
-                value={dogName}
-                onChange={(e) => setDogName(e.target.value)}
-              />
-            </div>
-          </Grid>
-        </Grid>
+        {pottyLogs.map((log, index) => {
+          return (
+            <Typography variant="h6" gutterBottom key={index}>
+              {log.type === "poo" ? "💩" : "💦"} {log.date}
+            </Typography>
+          )
+        })}
       </div>
     </div>
   )
