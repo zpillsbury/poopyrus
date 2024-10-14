@@ -24,8 +24,7 @@ export function App() {
   const storedLogs = localStorage.getItem("logs")
   const initialLogs = storedLogs ? JSON.parse(storedLogs) : []
   const [pottyLogs, setPottyLogs] = useState(initialLogs)
-
-  console.log(DateTime.now().toFormat("LLL dd, t"))
+  const [confirmDeleteId, setConfirmDeleteId] = useState("")
 
   function addLog(pottyType) {
     // Luxon Date Time Formatting
@@ -45,6 +44,17 @@ export function App() {
 
     localStorage.setItem("logs", JSON.stringify(newLogs))
     setPottyLogs(newLogs)
+  }
+
+  function deleteLog() {
+    const filteredLogs = pottyLogs.filter((currentLog) => {
+      return currentLog.id !== confirmDeleteId
+    })
+
+    setPottyLogs(filteredLogs)
+    localStorage.setItem("logs", JSON.stringify(filteredLogs))
+
+    setConfirmDeleteId("")
   }
 
   return (
@@ -88,24 +98,34 @@ export function App() {
               </Typography>
 
               <IconButton
-                aria-label="delete"
                 className="deleteButton"
                 color="secondary"
                 onClick={() => {
-                  const filteredLogs = pottyLogs.filter((currentLog) => {
-                    return currentLog.id !== log.id
-                  })
-
-                  setPottyLogs(filteredLogs)
-                  localStorage.setItem("logs", JSON.stringify(filteredLogs))
+                  setConfirmDeleteId(log.id)
                 }}
               >
-                <DeleteIcon onClick={() => {}} />
+                <DeleteIcon />
               </IconButton>
             </div>
           )
         })}
       </div>
+
+      {confirmDeleteId ? (
+        <Dialog
+          open={true}
+          onClose={() => {
+            setConfirmDeleteId("")
+          }}
+        >
+          <DialogTitle id="alert-dialog-title">{"Delete this log?"}</DialogTitle>
+
+          <DialogActions>
+            <Button onClick={() => setConfirmDeleteId("")}>No</Button>
+            <Button onClick={deleteLog}>Yes</Button>
+          </DialogActions>
+        </Dialog>
+      ) : null}
     </div>
   )
 }
