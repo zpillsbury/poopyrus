@@ -11,9 +11,9 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import { v4 as uuidv4 } from "uuid"
 import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
+import Tooltip from "@mui/material/Tooltip"
+import pkg from "../package.json"
 
 import "./App.css"
 
@@ -61,9 +61,11 @@ export function App() {
     <div>
       <AppBar>
         <Toolbar>
-          <Typography variant="h6" component="div">
-            💩 Poopyrus
-          </Typography>
+          <Tooltip title={pkg.version}>
+            <Typography variant="h6" component="div">
+              💩 Poopyrus
+            </Typography>
+          </Tooltip>
         </Toolbar>
       </AppBar>
 
