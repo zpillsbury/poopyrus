@@ -21,7 +21,7 @@ import "./App.css"
 // https://mui.com/material-ui/all-components/
 
 export function App() {
-  const storedLogs = localStorage.getItem("logs")
+  const storedLogs = localStorage.getItem("log")
   const initialLogs = storedLogs ? JSON.parse(storedLogs) : []
   const [pottyLogs, setPottyLogs] = useState(initialLogs)
   const [confirmDeleteId, setConfirmDeleteId] = useState("")
@@ -42,7 +42,7 @@ export function App() {
       },
     ]
 
-    localStorage.setItem("logs", JSON.stringify(newLogs))
+    localStorage.setItem("log", JSON.stringify(newLogs))
     setPottyLogs(newLogs)
   }
 
@@ -52,7 +52,7 @@ export function App() {
     })
 
     setPottyLogs(filteredLogs)
-    localStorage.setItem("logs", JSON.stringify(filteredLogs))
+    localStorage.setItem("log", JSON.stringify(filteredLogs))
 
     setConfirmDeleteId("")
   }
