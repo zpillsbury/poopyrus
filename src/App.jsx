@@ -62,7 +62,7 @@ export function App() {
       <AppBar>
         <Toolbar>
           <Tooltip title={pkg.version}>
-            <Typography variant="h6" component="div">
+            <Typography variant="h6" component="div" id="appbar-title">
               💩 Poopyrus
             </Typography>
           </Tooltip>

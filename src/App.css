@@ -21,9 +21,9 @@
   margin-bottom: 16px !important;
 }
 
-.entryLog { 
+.entryLog {
   margin-bottom: 16px;
-  text-align: center; 
+  text-align: center;
   align-content: center;
   display: flex;
 }
@@ -31,4 +31,9 @@
 .deleteButton {
   margin-left: 10px !important;
   margin-top: -5px !important;
+}
+
+#appbar-title {
+  font-family: Papyrus, Copperplate, fantasy;
+  font-size: 26px;
 }
