@@ -20,3 +20,15 @@
   margin-top: 16px !important;
   margin-bottom: 16px !important;
 }
+
+.entryLog { 
+  margin-bottom: 16px;
+  text-align: center; 
+  align-content: center;
+  display: flex;
+}
+
+.deleteButton {
+  margin-left: 10px !important;
+  margin-top: -5px !important;
+}
