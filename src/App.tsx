@@ -10,28 +10,33 @@ import IconButton from "@mui/material/IconButton"
 import Toolbar from "@mui/material/Toolbar"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
+
 import { DateTime } from "luxon"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
-import pkg from "../package.json"
 
+import pkg from "../package.json"
 import "./App.css"
 
 // Material UI components ( buttons, sliders, etc)
 // https://mui.com/material-ui/all-components/
 
+interface PottyLog {
+  date: string
+  type: string
+  id: string
+}
+
 export function App() {
   const storedLogs = localStorage.getItem("log")
-  const initialLogs = storedLogs ? JSON.parse(storedLogs) : []
+  const initialLogs: PottyLog[] = storedLogs ? JSON.parse(storedLogs) : []
+
   const [pottyLogs, setPottyLogs] = useState(initialLogs)
   const [confirmDeleteId, setConfirmDeleteId] = useState("")
 
-  function addLog(pottyType) {
+  function addLog(pottyType: string) {
     // Luxon Date Time Formatting
     // https://moment.github.io/luxon/#/formatting
-
-    console.log(pottyType)
-    console.log(DateTime.now().toFormat("t"))
 
     const newLogs = [
       ...pottyLogs,
