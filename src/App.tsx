@@ -1,4 +1,3 @@
-import DeleteIcon from "@mui/icons-material/Delete"
 import AppBar from "@mui/material/AppBar"
 import Button from "@mui/material/Button"
 import ButtonGroup from "@mui/material/ButtonGroup"
@@ -6,8 +5,6 @@ import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
 import DialogTitle from "@mui/material/DialogTitle"
 import Divider from "@mui/material/Divider"
-import IconButton from "@mui/material/IconButton"
-import TextField from "@mui/material/TextField"
 import Toolbar from "@mui/material/Toolbar"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
@@ -16,18 +13,12 @@ import { DateTime } from "luxon"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
-import { Box } from "@mui/material"
 import pkg from "../package.json"
 import "./App.css"
+import { Log, PottyLog } from "./Log"
 
 // Material UI components ( buttons, sliders, etc)
 // https://mui.com/material-ui/all-components/
-
-interface PottyLog {
-  date: string
-  type: string
-  id: string
-}
 
 export function App() {
   const storedLogs = localStorage.getItem("log")
@@ -35,7 +26,6 @@ export function App() {
 
   const [pottyLogs, setPottyLogs] = useState(initialLogs)
   const [confirmDeleteId, setConfirmDeleteId] = useState("")
-  const [note, setNote] = useState("")
 
   function addLog(pottyType: string) {
     // Luxon Date Time Formatting
@@ -101,35 +91,7 @@ export function App() {
         <Divider className="poop-divider" />
 
         {pottyLogs.map((log) => {
-          return (
-            <div key={log.id}>
-              <div className="entryLog">
-                <Typography variant="h6" gutterBottom>
-                  {log.type === "poo" ? "💩" : "💦"} {log.date}
-                </Typography>
-
-                <IconButton
-                  className="deleteButton"
-                  color="secondary"
-                  onClick={() => {
-                    setConfirmDeleteId(log.id)
-                  }}
-                >
-                  <DeleteIcon />
-                </IconButton>
-              </div>
-
-              <Box sx={{ mb: 2 }}>
-                <TextField
-                  label="Potty log"
-                  multiline
-                  rows={4}
-                  value={note}
-                  onChange={(e) => setNote(e.target.value)}
-                />
-              </Box>
-            </div>
-          )
+          return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
         })}
       </div>
 
