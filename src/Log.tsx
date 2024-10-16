@@ -17,7 +17,7 @@ interface LogProps {
 }
 
 export function Log({ log, setConfirmDeleteId }: LogProps) {
-  const [note, setNote] = useState("")
+  const [note, setNote] = useState(localStorage.getItem(log.id))
 
   return (
     <div>
@@ -43,7 +43,11 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
           multiline
           rows={4}
           value={note}
-          onChange={(e) => setNote(e.target.value)}
+          onChange={(e) => {
+            setNote(e.target.value)
+
+            localStorage.setItem(log.id, e.target.value)
+          }}
         />
       </Box>
     </div>
