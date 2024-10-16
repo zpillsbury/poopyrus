@@ -1,9 +1,6 @@
 import AppBar from "@mui/material/AppBar"
 import Button from "@mui/material/Button"
 import ButtonGroup from "@mui/material/ButtonGroup"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogTitle from "@mui/material/DialogTitle"
 import Divider from "@mui/material/Divider"
 import Toolbar from "@mui/material/Toolbar"
 import Tooltip from "@mui/material/Tooltip"
@@ -15,6 +12,7 @@ import { v4 as uuidv4 } from "uuid"
 
 import pkg from "../package.json"
 import "./App.css"
+import { ConfirmDelete } from "./ConfirmDelete"
 import { Log, PottyLog } from "./Log"
 
 // Material UI components ( buttons, sliders, etc)
@@ -42,17 +40,6 @@ export function App() {
 
     localStorage.setItem("log", JSON.stringify(newLogs))
     setPottyLogs(newLogs)
-  }
-
-  function deleteLog() {
-    const filteredLogs = pottyLogs.filter((currentLog) => {
-      return currentLog.id !== confirmDeleteId
-    })
-
-    setPottyLogs(filteredLogs)
-    localStorage.setItem("log", JSON.stringify(filteredLogs))
-
-    setConfirmDeleteId("")
   }
 
   return (
@@ -96,19 +83,12 @@ export function App() {
       </div>
 
       {confirmDeleteId ? (
-        <Dialog
-          open={true}
-          onClose={() => {
-            setConfirmDeleteId("")
-          }}
-        >
-          <DialogTitle id="alert-dialog-title">{"Delete this log?"}</DialogTitle>
-
-          <DialogActions>
-            <Button onClick={() => setConfirmDeleteId("")}>No</Button>
-            <Button onClick={deleteLog}>Yes</Button>
-          </DialogActions>
-        </Dialog>
+        <ConfirmDelete
+          pottyLogs={pottyLogs}
+          setConfirmDeleteId={setConfirmDeleteId}
+          confirmDeleteId={confirmDeleteId}
+          setPottyLogs={setPottyLogs}
+        />
       ) : null}
     </div>
   )
