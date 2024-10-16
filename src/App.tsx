@@ -55,7 +55,9 @@ export function App() {
       </AppBar>
 
       <div id="content">
-        <h1>Potty Logger 9000 🪵</h1>
+        <Typography variant="h4" gutterBottom>
+          Add Log 🪵
+        </Typography>
 
         <ButtonGroup disableElevation variant="outlined" color="secondary" size="large">
           <Button
@@ -76,6 +78,10 @@ export function App() {
         </ButtonGroup>
 
         <Divider className="poop-divider" />
+
+        <Typography variant="h4" gutterBottom>
+          Logs 📝
+        </Typography>
 
         {pottyLogs.map((log) => {
           return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
