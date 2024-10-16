@@ -12,8 +12,8 @@ import { v4 as uuidv4 } from "uuid"
 
 import pkg from "../package.json"
 import "./App.css"
-import { ConfirmDelete } from "./ConfirmDelete"
-import { Log, PottyLog } from "./Log"
+import { ConfirmDelete } from "./Components/ConfirmDelete"
+import { Log, PottyLog } from "./Components/Log"
 
 // Material UI components ( buttons, sliders, etc)
 // https://mui.com/material-ui/all-components/
