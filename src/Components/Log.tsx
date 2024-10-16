@@ -1,3 +1,5 @@
+import CloseIcon from "@mui/icons-material/Close"
+import CreateIcon from "@mui/icons-material/Create"
 import DeleteIcon from "@mui/icons-material/Delete"
 import { Box } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
@@ -17,7 +19,8 @@ interface LogProps {
 }
 
 export function Log({ log, setConfirmDeleteId }: LogProps) {
-  const [note, setNote] = useState(localStorage.getItem(log.id))
+  const [note, setNote] = useState(localStorage.getItem(log.id) ?? "")
+  const [noteOpen, setNoteOpen] = useState(false)
 
   return (
     <div>
@@ -35,20 +38,34 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
         >
           <DeleteIcon />
         </IconButton>
+
+        <IconButton
+          className="deleteButton"
+          color="secondary"
+          onClick={() => {
+            setNoteOpen(!noteOpen)
+          }}
+        >
+          {noteOpen ? <CloseIcon /> : <CreateIcon />}
+        </IconButton>
       </div>
 
       <Box sx={{ mb: 2 }}>
-        <TextField
-          label="Potty log"
-          multiline
-          rows={4}
-          value={note}
-          onChange={(e) => {
-            setNote(e.target.value)
+        {noteOpen ? (
+          <TextField
+            label="Potty log"
+            multiline
+            rows={4}
+            value={note}
+            onChange={(e) => {
+              setNote(e.target.value)
 
-            localStorage.setItem(log.id, e.target.value)
-          }}
-        />
+              localStorage.setItem(log.id, e.target.value)
+            }}
+          />
+        ) : (
+          <Typography variant="body2">{note}</Typography>
+        )}
       </Box>
     </div>
   )
