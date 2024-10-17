@@ -1,5 +1,3 @@
-import DeleteIcon from "@mui/icons-material/Delete"
-import NoteAddIcon from "@mui/icons-material/NoteAdd"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
@@ -7,8 +5,6 @@ import ButtonGroup from "@mui/material/ButtonGroup"
 import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid2"
 import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import ListItemText from "@mui/material/ListItemText"
 import Toolbar from "@mui/material/Toolbar"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
@@ -22,7 +18,6 @@ import { DateTime } from "luxon"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
-import { IconButton, ListItemIcon } from "@mui/material"
 import React from "react"
 import pkg from "../package.json"
 import "./App.css"
@@ -107,53 +102,17 @@ export function App() {
           </Grid>
 
           <Grid size={8}>
-            {pottyLogs.map((log) => {
-              return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
-            })}
+            <Box sx={{ maxWidth: 450 }}>
+              <List>
+                {pottyLogs.map((log) => {
+                  return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
+                })}
+              </List>
+            </Box>
           </Grid>
         </Grid>
 
         <Divider className="poop-divider" />
-        <Box sx={{ maxWidth: 450 }}>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <Typography variant="h4">💩</Typography>
-              </ListItemIcon>
-              <ListItemText primary="Oct 16, 3:34 PM" secondary="Poo" />
-            </ListItem>
-
-            <ListItem
-              secondaryAction={
-                <Box>
-                  <IconButton
-                    className="deleteButton"
-                    color="secondary"
-                    onClick={() => {
-                      setConfirmDeleteId("")
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton
-                    className="deleteButton"
-                    color="secondary"
-                    onClick={() => {
-                      console.log("not")
-                    }}
-                  >
-                    <NoteAddIcon />
-                  </IconButton>
-                </Box>
-              }
-            >
-              <ListItemIcon>
-                <Typography variant="h4">💦</Typography>
-              </ListItemIcon>
-              <ListItemText primary="Oct 16, 3:34 PM" secondary="Pee" />
-            </ListItem>
-          </List>
-        </Box>
       </div>
 
       {confirmDeleteId ? (

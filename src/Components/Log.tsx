@@ -1,7 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete"
 import NoteAddIcon from "@mui/icons-material/NoteAdd"
-import RemoveIcon from "@mui/icons-material/Remove"
-import { Box } from "@mui/material"
+import SaveIcon from "@mui/icons-material/Save"
+import { Box, ListItem, ListItemIcon, ListItemText } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
@@ -24,35 +24,41 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
 
   return (
     <div>
-      <div className="entryLog">
-        <Typography variant="h6" gutterBottom>
-          {log.type === "poo" ? "💩" : "💦"} {log.date}
-        </Typography>
+      <ListItem
+        secondaryAction={
+          <Box>
+            <IconButton
+              className="deleteButton"
+              color="secondary"
+              onClick={() => {
+                setConfirmDeleteId(log.id)
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
 
-        <IconButton
-          className="deleteButton"
-          color="secondary"
-          onClick={() => {
-            setConfirmDeleteId(log.id)
-          }}
-        >
-          <DeleteIcon />
-        </IconButton>
-
-        <IconButton
-          className="deleteButton"
-          color="secondary"
-          onClick={() => {
-            setNoteOpen(!noteOpen)
-          }}
-        >
-          {noteOpen ? <RemoveIcon /> : <NoteAddIcon />}
-        </IconButton>
-      </div>
+            <IconButton
+              className="deleteButton"
+              color="secondary"
+              onClick={() => {
+                setNoteOpen(!noteOpen)
+              }}
+            >
+              {noteOpen ? <SaveIcon /> : <NoteAddIcon />}
+            </IconButton>
+          </Box>
+        }
+      >
+        <ListItemIcon>
+          <Typography variant="h4">{log.type === "poo" ? "💩" : "💦"}</Typography>
+        </ListItemIcon>
+        <ListItemText primary={log.date} secondary={log.type === "poo" ? "Poo" : "Pee"} />
+      </ListItem>
 
       <Box sx={{ mb: 2 }}>
         {noteOpen ? (
           <TextField
+            sx={{ width: "100%" }}
             label="Potty log"
             multiline
             rows={4}
