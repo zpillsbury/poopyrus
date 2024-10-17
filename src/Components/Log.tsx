@@ -1,6 +1,6 @@
-import CloseIcon from "@mui/icons-material/Close"
-import CreateIcon from "@mui/icons-material/Create"
 import DeleteIcon from "@mui/icons-material/Delete"
+import NoteAddIcon from "@mui/icons-material/NoteAdd"
+import RemoveIcon from "@mui/icons-material/Remove"
 import { Box } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import TextField from "@mui/material/TextField"
@@ -46,7 +46,7 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
             setNoteOpen(!noteOpen)
           }}
         >
-          {noteOpen ? <CloseIcon /> : <CreateIcon />}
+          {noteOpen ? <RemoveIcon /> : <NoteAddIcon />}
         </IconButton>
       </div>
 
