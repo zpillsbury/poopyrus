@@ -68,7 +68,7 @@ export function App() {
       </AppBar>
 
       <div id="content">
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           Add Log 🪵
         </Typography>
 
@@ -93,7 +93,11 @@ export function App() {
         <Grid container spacing={2}>
           <Grid size={{ sm: 12, md: 4 }}>
             <LocalizationProvider dateAdapter={AdapterLuxon}>
-              <DateCalendar value={calDate} onChange={(newValue) => setCalDate(newValue)} />
+              <DateCalendar
+                sx={{ marginLeft: 0, marginRight: 0 }}
+                value={calDate}
+                onChange={(newValue) => setCalDate(newValue)}
+              />
             </LocalizationProvider>
           </Grid>
 
