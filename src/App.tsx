@@ -1,28 +1,21 @@
-import DeleteIcon from "@mui/icons-material/Delete"
-import NoteAddIcon from "@mui/icons-material/NoteAdd"
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import ButtonGroup from "@mui/material/ButtonGroup"
-import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid2"
 import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import ListItemText from "@mui/material/ListItemText"
 import Toolbar from "@mui/material/Toolbar"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
 
 import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon"
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar"
-import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo"
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider"
 
 import { DateTime } from "luxon"
 import { useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 
-import { IconButton, ListItemIcon } from "@mui/material"
 import React from "react"
 import pkg from "../package.json"
 import "./App.css"
@@ -33,13 +26,17 @@ import { Log, PottyLog } from "./Components/Log"
 // https://mui.com/material-ui/all-components/
 
 export function App() {
-  const storedLogs = localStorage.getItem("log")
+  const storedLogs = localStorage.getItem("logEntries")
   const initialLogs: PottyLog[] = storedLogs ? JSON.parse(storedLogs) : []
 
   const [pottyLogs, setPottyLogs] = useState(initialLogs)
   const [confirmDeleteId, setConfirmDeleteId] = useState("")
+  const [calDate, setCalDate] = React.useState(DateTime.now())
 
-  const [value, setValue] = React.useState(DateTime.fromISO("2024-04-17"))
+  const filteredPottyLogs = pottyLogs.filter((log) => {
+    const logDate = DateTime.fromISO(log.date)
+    return logDate.toISODate() === calDate.toISODate()
+  })
 
   function addLog(pottyType: string) {
     // Luxon Date Time Formatting
@@ -48,13 +45,13 @@ export function App() {
     const newLogs = [
       ...pottyLogs,
       {
-        date: DateTime.now().toFormat("LLL dd, t"),
+        date: DateTime.now().toISO(),
         type: pottyType,
         id: uuidv4(),
       },
     ]
 
-    localStorage.setItem("log", JSON.stringify(newLogs))
+    localStorage.setItem("logEntries", JSON.stringify(newLogs))
     setPottyLogs(newLogs)
   }
 
@@ -95,65 +92,25 @@ export function App() {
 
         <Grid container spacing={2}>
           <Grid size={4}>
-            <Box sx={{ display: "flex" }}>
-              <LocalizationProvider dateAdapter={AdapterLuxon}>
-                <DemoContainer components={["DateCalendar", "DateCalendar"]}>
-                  <DemoItem>
-                    <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
-                  </DemoItem>
-                </DemoContainer>
-              </LocalizationProvider>
-            </Box>
+            <LocalizationProvider dateAdapter={AdapterLuxon}>
+              <DateCalendar value={calDate} onChange={(newValue) => setCalDate(newValue)} />
+            </LocalizationProvider>
           </Grid>
 
           <Grid size={8}>
-            {pottyLogs.map((log) => {
-              return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
-            })}
+            <Box sx={{ maxWidth: 450 }}>
+              <List>
+                {filteredPottyLogs.length > 0 ? (
+                  filteredPottyLogs.map((log) => {
+                    return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
+                  })
+                ) : (
+                  <Typography variant="h6">No logs found 🤷‍♂️</Typography>
+                )}
+              </List>
+            </Box>
           </Grid>
         </Grid>
-
-        <Divider className="poop-divider" />
-        <Box sx={{ maxWidth: 450 }}>
-          <List>
-            <ListItem>
-              <ListItemIcon>
-                <Typography variant="h4">💩</Typography>
-              </ListItemIcon>
-              <ListItemText primary="Oct 16, 3:34 PM" secondary="Poo" />
-            </ListItem>
-
-            <ListItem
-              secondaryAction={
-                <Box>
-                  <IconButton
-                    className="deleteButton"
-                    color="secondary"
-                    onClick={() => {
-                      setConfirmDeleteId("")
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton
-                    className="deleteButton"
-                    color="secondary"
-                    onClick={() => {
-                      console.log("not")
-                    }}
-                  >
-                    <NoteAddIcon />
-                  </IconButton>
-                </Box>
-              }
-            >
-              <ListItemIcon>
-                <Typography variant="h4">💦</Typography>
-              </ListItemIcon>
-              <ListItemText primary="Oct 16, 3:34 PM" secondary="Pee" />
-            </ListItem>
-          </List>
-        </Box>
       </div>
 
       {confirmDeleteId ? (
