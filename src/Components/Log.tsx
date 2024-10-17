@@ -5,6 +5,7 @@ import { Box, ListItem, ListItemIcon, ListItemText } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
+import { DateTime } from "luxon"
 import { useState } from "react"
 
 export interface PottyLog {
@@ -52,7 +53,10 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
         <ListItemIcon>
           <Typography variant="h4">{log.type === "poo" ? "💩" : "💦"}</Typography>
         </ListItemIcon>
-        <ListItemText primary={log.date} secondary={log.type === "poo" ? "Poo" : "Pee"} />
+        <ListItemText
+          primary={DateTime.fromISO(log.date).toFormat("LLL dd, t")}
+          secondary={log.type === "poo" ? "Poo" : "Pee"}
+        />
       </ListItem>
 
       <Box sx={{ mb: 2 }}>
