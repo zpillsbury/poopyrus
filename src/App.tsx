@@ -91,17 +91,17 @@ export function App() {
         </ButtonGroup>
 
         <Grid container spacing={2}>
-          <Grid size={4}>
+          <Grid size={{ sm: 12, md: 4 }}>
             <LocalizationProvider dateAdapter={AdapterLuxon}>
               <DateCalendar value={calDate} onChange={(newValue) => setCalDate(newValue)} />
             </LocalizationProvider>
           </Grid>
 
-          <Grid size={8}>
-            <Box sx={{ maxWidth: 450 }}>
-              <List>
+          <Grid size={{ sm: 12, md: 8 }}>
+            <Box>
+              <List sx={{ width: "100%" }}>
                 {filteredPottyLogs.length > 0 ? (
-                  filteredPottyLogs.map((log) => {
+                  filteredPottyLogs.reverse().map((log) => {
                     return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
                   })
                 ) : (
