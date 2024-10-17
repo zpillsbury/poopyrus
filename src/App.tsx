@@ -2,7 +2,6 @@ import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
 import ButtonGroup from "@mui/material/ButtonGroup"
-import Divider from "@mui/material/Divider"
 import Grid from "@mui/material/Grid2"
 import List from "@mui/material/List"
 import Toolbar from "@mui/material/Toolbar"
@@ -111,8 +110,6 @@ export function App() {
             </Box>
           </Grid>
         </Grid>
-
-        <Divider className="poop-divider" />
       </div>
 
       {confirmDeleteId ? (
