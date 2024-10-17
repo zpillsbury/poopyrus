@@ -24,7 +24,7 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
   const [noteOpen, setNoteOpen] = useState(false)
 
   return (
-    <div>
+    <Box sx={{ width: 320 }}>
       <ListItem
         secondaryAction={
           <Box>
@@ -53,6 +53,7 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
         <ListItemIcon>
           <Typography variant="h4">{log.type === "poo" ? "💩" : "💦"}</Typography>
         </ListItemIcon>
+
         <ListItemText
           primary={DateTime.fromISO(log.date).toFormat("LLL dd, t")}
           secondary={log.type === "poo" ? "Poo" : "Pee"}
@@ -77,6 +78,6 @@ export function Log({ log, setConfirmDeleteId }: LogProps) {
           <Typography variant="body2">{note}</Typography>
         )}
       </Box>
-    </div>
+    </Box>
   )
 }
