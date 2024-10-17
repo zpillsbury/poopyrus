@@ -68,27 +68,34 @@ export function App() {
       </AppBar>
 
       <div id="content">
-        <Typography variant="h6" gutterBottom>
-          Add Log 🪵
-        </Typography>
+        <Grid container spacing={2}>
+          <Grid size={{ sm: 12, md: 4 }}></Grid>
 
-        <ButtonGroup disableElevation variant="outlined" color="secondary" size="large">
-          <Button
-            onClick={() => {
-              addLog("pee")
-            }}
-          >
-            💦
-          </Button>
+          <Grid size={{ sm: 12, md: 8 }}>
+            <Box sx={{ display: "flex", alignItems: "flex-end", ml: 2 }}>
+              <Typography variant="h6" gutterBottom sx={{ mr: 3 }}>
+                Add Log 🪵
+              </Typography>
+              <ButtonGroup disableElevation variant="outlined" color="secondary" size="large">
+                <Button
+                  onClick={() => {
+                    addLog("pee")
+                  }}
+                >
+                  💦
+                </Button>
 
-          <Button
-            onClick={() => {
-              addLog("poo")
-            }}
-          >
-            💩
-          </Button>
-        </ButtonGroup>
+                <Button
+                  onClick={() => {
+                    addLog("poo")
+                  }}
+                >
+                  💩
+                </Button>
+              </ButtonGroup>
+            </Box>
+          </Grid>
+        </Grid>
 
         <Grid container spacing={2}>
           <Grid size={{ sm: 12, md: 4 }}>
