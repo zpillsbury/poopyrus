@@ -1,9 +1,9 @@
 import AppBar from "@mui/material/AppBar"
 import Box from "@mui/material/Box"
 import Button from "@mui/material/Button"
-import ButtonGroup from "@mui/material/ButtonGroup"
 import Grid from "@mui/material/Grid2"
 import List from "@mui/material/List"
+import Stack from "@mui/material/Stack"
 import Toolbar from "@mui/material/Toolbar"
 import Tooltip from "@mui/material/Tooltip"
 import Typography from "@mui/material/Typography"
@@ -73,26 +73,30 @@ export function App() {
 
           <Grid size={{ sm: 12, md: 8 }}>
             <Box sx={{ display: "flex", alignItems: "flex-end", ml: 2 }}>
-              <Typography variant="h6" gutterBottom sx={{ mr: 3 }}>
-                Add Log 🪵
-              </Typography>
-              <ButtonGroup disableElevation variant="outlined" color="secondary" size="large">
+              <Stack direction="row" spacing={2}>
                 <Button
+                  size="large"
+                  variant="outlined"
+                  sx={{ width: 145 }}
+                  color="secondary"
                   onClick={() => {
                     addLog("pee")
                   }}
                 >
                   💦
                 </Button>
-
                 <Button
+                  size="large"
+                  variant="outlined"
+                  sx={{ width: 145 }}
+                  color="secondary"
                   onClick={() => {
                     addLog("poo")
                   }}
                 >
                   💩
                 </Button>
-              </ButtonGroup>
+              </Stack>
             </Box>
           </Grid>
         </Grid>
