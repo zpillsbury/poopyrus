@@ -11,6 +11,7 @@ import { useState } from "react"
 export interface PottyLog {
   date: string
   type: string
+  name: string
   id: string
 }
 

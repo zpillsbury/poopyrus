@@ -9,6 +9,9 @@ interface ConfirmDeleteProps {
   confirmDeleteId: string
   setPottyLogs: (logs: PottyLog[]) => void
   setConfirmDeleteId: (id: string) => void
+  getLogs: () => void
+  loading: boolean
+  setLoading: (val: boolean) => void
 }
 
 export function ConfirmDelete({
@@ -16,17 +19,29 @@ export function ConfirmDelete({
   confirmDeleteId,
   setPottyLogs,
   setConfirmDeleteId,
+  getLogs,
+  loading,
+  setLoading,
 }: ConfirmDeleteProps) {
   // Deletes a log entry
-  function deleteLog() {
-    const filteredLogs = pottyLogs.filter((currentLog) => {
-      return currentLog.id !== confirmDeleteId
+  async function deleteLog() {
+    setLoading(true)
+    const deleteIt = await fetch(`http://localhost:8000/logs/${confirmDeleteId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer GeGntRBYuorgRbIg4aZV2CiHMcRaDz",
+      },
     })
 
-    setPottyLogs(filteredLogs)
-    localStorage.setItem("log", JSON.stringify(filteredLogs))
+    if (!deleteIt.ok) {
+      throw new Error(`Send status: ${deleteIt.status}`)
+    } else {
+      getLogs()
+    }
 
     setConfirmDeleteId("")
+    setLoading(false)
   }
 
   return (
@@ -39,8 +54,13 @@ export function ConfirmDelete({
       <DialogTitle id="alert-dialog-title">{"Delete this log?"}</DialogTitle>
 
       <DialogActions>
-        <Button onClick={() => setConfirmDeleteId("")}>No</Button>
-        <Button onClick={deleteLog}>Yes</Button>
+        <Button onClick={() => setConfirmDeleteId("")} disabled={loading}>
+          No
+        </Button>
+
+        <Button onClick={deleteLog} disabled={loading}>
+          Yes
+        </Button>
       </DialogActions>
     </Dialog>
   )
