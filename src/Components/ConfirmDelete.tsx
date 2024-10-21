@@ -2,12 +2,9 @@ import Button from "@mui/material/Button"
 import Dialog from "@mui/material/Dialog"
 import DialogActions from "@mui/material/DialogActions"
 import DialogTitle from "@mui/material/DialogTitle"
-import { PottyLog } from "./Log"
 
 interface ConfirmDeleteProps {
-  pottyLogs: PottyLog[]
   confirmDeleteId: string
-  setPottyLogs: (logs: PottyLog[]) => void
   setConfirmDeleteId: (id: string) => void
   getLogs: () => void
   loading: boolean
@@ -15,9 +12,7 @@ interface ConfirmDeleteProps {
 }
 
 export function ConfirmDelete({
-  pottyLogs,
   confirmDeleteId,
-  setPottyLogs,
   setConfirmDeleteId,
   getLogs,
   loading,

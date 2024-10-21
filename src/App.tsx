@@ -165,7 +165,14 @@ export function App() {
                 <List sx={{ width: "100%" }}>
                   {filteredPottyLogs.length > 0 ? (
                     filteredPottyLogs.reverse().map((log) => {
-                      return <Log key={log.id} log={log} setConfirmDeleteId={setConfirmDeleteId} />
+                      return (
+                        <Log
+                          key={log.id}
+                          log={log}
+                          getLogs={getLogs}
+                          setConfirmDeleteId={setConfirmDeleteId}
+                        />
+                      )
                     })
                   ) : (
                     <Typography variant="h6">No logs found 🤷‍♂️</Typography>
@@ -179,10 +186,8 @@ export function App() {
 
       {confirmDeleteId ? (
         <ConfirmDelete
-          pottyLogs={pottyLogs}
           setConfirmDeleteId={setConfirmDeleteId}
           confirmDeleteId={confirmDeleteId}
-          setPottyLogs={setPottyLogs}
           getLogs={getLogs}
           loading={loading}
           setLoading={setLoading}
