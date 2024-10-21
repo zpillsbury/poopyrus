@@ -1,7 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete"
 import NoteAddIcon from "@mui/icons-material/NoteAdd"
 import SaveIcon from "@mui/icons-material/Save"
-import { Box, Button, ListItem, ListItemIcon, ListItemText } from "@mui/material"
+import { Box, ListItem, ListItemIcon, ListItemText } from "@mui/material"
 import IconButton from "@mui/material/IconButton"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
@@ -20,13 +20,17 @@ interface LogProps {
   log: PottyLog
   setConfirmDeleteId: (id: string) => void
   getLogs: () => void
+  loading: boolean
+  setLoading: (val: boolean) => void
 }
 
-export function Log({ log, setConfirmDeleteId, getLogs }: LogProps) {
+export function Log({ log, setConfirmDeleteId, getLogs, loading, setLoading }: LogProps) {
   const [note, setNote] = useState(log.note ?? "")
   const [noteOpen, setNoteOpen] = useState(false)
 
   async function updateLog() {
+    setLoading(true)
+
     const send = await fetch(`http://localhost:8000/logs/${log.id}`, {
       method: "PATCH",
       headers: {
@@ -41,6 +45,8 @@ export function Log({ log, setConfirmDeleteId, getLogs }: LogProps) {
     } else {
       getLogs()
     }
+
+    setLoading(false)
   }
 
   return (
@@ -51,6 +57,7 @@ export function Log({ log, setConfirmDeleteId, getLogs }: LogProps) {
             <IconButton
               className="deleteButton"
               color="secondary"
+              disabled={loading}
               onClick={() => {
                 setConfirmDeleteId(log.id)
               }}
@@ -61,8 +68,14 @@ export function Log({ log, setConfirmDeleteId, getLogs }: LogProps) {
             <IconButton
               className="deleteButton"
               color="secondary"
-              onClick={() => {
-                setNoteOpen(!noteOpen)
+              disabled={loading}
+              onClick={async () => {
+                if (noteOpen) {
+                  await updateLog()
+                  setNoteOpen(false)
+                } else {
+                  setNoteOpen(true)
+                }
               }}
             >
               {noteOpen ? <SaveIcon /> : <NoteAddIcon />}
@@ -93,17 +106,6 @@ export function Log({ log, setConfirmDeleteId, getLogs }: LogProps) {
                 setNote(e.target.value)
               }}
             />
-
-            <Button
-              size="large"
-              variant="outlined"
-              color="secondary"
-              onClick={async () => {
-                await updateLog()
-              }}
-            >
-              submit
-            </Button>
           </Box>
         ) : (
           <Typography variant="body2">{note}</Typography>

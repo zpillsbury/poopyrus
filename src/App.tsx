@@ -171,6 +171,8 @@ export function App() {
                           log={log}
                           getLogs={getLogs}
                           setConfirmDeleteId={setConfirmDeleteId}
+                          loading={loading}
+                          setLoading={setLoading}
                         />
                       )
                     })
